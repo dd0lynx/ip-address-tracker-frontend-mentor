@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap');
+:root {
+    --very-dark-gray: hsl(0, 0%, 17%);
+    --dark-grey: hsl(0, 0%, 59%);
+
+    font-family: 'Rubik', sans-serif;
+    font-size: 18px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    display: grid;
+    grid-template-areas: "main-area";
+
+    min-height: 100vh;
+}
+
+main > *{
+    grid-area: main-area;
+
+}
+.background {
+    z-index: 0;
+    place-self: stretch;
+    
+    background: blue;
+}
+.forground {
+    z-index: 1;
+    justify-self: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2rem;
+
+    padding-top: 2rem;
+}
+
+.page-title {
+    color: white;
+}
+/* Search Bar */
+.search-bar {
+    display: flex;
+}
+.search-bar > * {
+    padding: 0.7rem 1rem;
+}
+.search-box {
+    flex-grow: 1;
+
+    display: flex;
+    align-items: center;
+
+    background: white;
+}
+.search-box > input {
+
+    border: none;
+    background: none;
+}
+.search-bar button {
+    border: none;
+    background: black;
+}
+
+/* info card */
+.info-card {
+    background: white;
+    text-align: center;
+    padding-top: 1rem;
+}
+.info-card > *{
+    margin-bottom: 1rem;
+}
+.info-card > * > .label {
+    color: var(--dark-grey);
+    text-transform: uppercase;
+    font-size: 0.6rem;
+}
+.info-card > * > .info {
+    color: var(--very-dark-gray);
+}
