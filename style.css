@@ -4,6 +4,7 @@
     --dark-grey: hsl(0, 0%, 59%);
 
     font-family: 'Rubik', sans-serif;
+    font-weight: 400;
     font-size: 18px;
 }
 
@@ -13,10 +14,10 @@
 }
 
 main {
+    min-height: 100vh;
+
     display: grid;
     grid-template-areas: "main-area";
-
-    min-height: 100vh;
 }
 
 main > *{
@@ -29,27 +30,38 @@ main > *{
     
     background: blue;
 }
+.background img {
+    width: 100%;
+    height: 275px;
+
+    object-fit: cover;
+    object-position: center;
+}
 .forground {
     z-index: 1;
+    width: 85%;
     justify-self: center;
 
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 2rem;
+    gap: 1.5rem;
 
-    padding-top: 2rem;
+    padding-top: 1.5rem;
 }
 
 .page-title {
     color: white;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 500;
 }
+
 /* Search Bar */
 .search-bar {
+    height: 50px;
+
     display: flex;
-}
-.search-bar > * {
-    padding: 0.7rem 1rem;
 }
 .search-box {
     flex-grow: 1;
@@ -58,31 +70,78 @@ main > *{
     align-items: center;
 
     background: white;
+    border-radius: 10px 0 0 10px;
 }
 .search-box > input {
+    width: 100%;
+    height: 100%;
+    padding-left: 20px;
 
     border: none;
     background: none;
+    outline: none;
 }
 .search-bar button {
+    width: 50px;
+
     border: none;
     background: black;
+    border-radius: 0 10px 10px 0;
+    cursor: pointer;
 }
 
 /* info card */
 .info-card {
+    padding: 1.5rem 0;
+
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    gap: 1.5rem;
+
     background: white;
+    border-radius: 10px;
     text-align: center;
-    padding-top: 1rem;
-}
-.info-card > *{
-    margin-bottom: 1rem;
 }
 .info-card > * > .label {
     color: var(--dark-grey);
     text-transform: uppercase;
     font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 .info-card > * > .info {
     color: var(--very-dark-gray);
+    font-weight: 500;
+}
+
+@media screen and (min-width: 800px) {
+    .forground {
+        align-items: center;
+    }
+    .search-bar {
+        width: 50%;
+    }
+    .info-card {
+        width: 85%;
+        min-width: min-content;
+        padding: 2.5rem 1.5rem;
+        margin: 1.5rem 0;
+
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr;
+
+        text-align: left;
+    }
+    .info-card > * > .info {
+        height: calc(100% - 1.5rem);
+        margin-top: -0.5rem;
+        padding-top: 1rem;
+        padding-right: 2rem;
+        border-right: 1px solid var(--dark-grey);
+
+        font-size: 1.5rem;
+    }
+    .info-card > *:last-child > .info {
+        border-right: none;
+    }
 }
