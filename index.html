@@ -10,6 +10,10 @@
     <title>Frontend Mentor | IP Address Tracker</title>
 
     <link rel="stylesheet" href="./style.css">
+
+    <!-- leafletjs -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
 </head>
 <body>
     <main>
@@ -28,25 +32,29 @@
             <div class="info-card">
                 <div id="address">
                     <p class="label">IP Address</p>
-                    <p class="info">192.212.174.101</p>
+                    <p class="info">---</p>
                 </div>
                 <div id="location">
                     <p class="label">Location</p>
-                    <p class="info">Brooklyn, NY 10001</p>
+                    <p class="info">---</p>
                 </div>
                 <div id="timezone">
                     <p class="label">Timezone</p>
-                    <p class="info">UTC -05:00</p>
+                    <p class="info">---</p>
                 </div>
                 <div id="isp">
                     <p class="label">ISP</p>
-                    <p class="info">SpaceX Starline</p>
+                    <p class="info">---</p>
                 </div>
             </div>
         </div>
         <div class="background">
             <img src="./img/pattern-bg.png" alt="">
+            <div id="map"></div>
         </div>
     </main>
 </body>
+
+<script src="./map.js"></script>
+
 </html>

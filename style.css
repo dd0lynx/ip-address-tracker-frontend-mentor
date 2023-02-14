@@ -26,9 +26,11 @@ main > *{
 }
 .background {
     z-index: 0;
+    height: 100%;
     place-self: stretch;
-    
-    background: blue;
+
+    display: flex;
+    flex-direction: column;
 }
 .background img {
     width: 100%;
@@ -37,10 +39,13 @@ main > *{
     object-fit: cover;
     object-position: center;
 }
+#map {
+    flex-grow: 1;
+}
 .forground {
     z-index: 1;
     width: 85%;
-    justify-self: center;
+    place-self: start center ;
 
     display: flex;
     flex-direction: column;
