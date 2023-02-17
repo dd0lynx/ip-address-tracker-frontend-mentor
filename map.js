@@ -1,6 +1,8 @@
-const ipify = 'https://api.ipify.org?format=json'
-const geo_url = 'https://geo.ipify.org/api/v2/country,city?apiKey=at_SLmtfxVEgxOGopwDzOfi2dvHvsU4P&ipAddress='
+const ipifyURL = 'https://geo.ipify.org/api/v2/country,city'
+const ipifyKey = 'at_SLmtfxVEgxOGopwDzOfi2dvHvsU4P'
+const geo_url = 'https://geo.ipify.org/api/v2/country,city?apiKey=&ipAddress='
 
+const ipInput = document.getElementById('ipInput');
 const addressField = document.getElementById('address').getElementsByClassName('info')[0];
 const locationField = document.getElementById('location').getElementsByClassName('info')[0];
 const timezoneField = document.getElementById('timezone').getElementsByClassName('info')[0];
@@ -69,6 +71,19 @@ const states = {
     'Wyoming' : 'WY'
 }
 
+var map = L.map('map', {
+    zoomControl: false
+});
+var customMarker = L.icon({
+    iconUrl: './img/icon-location.svg',
+    iconSize: [46, 56],
+    iconAnchor: [23, 55]
+});
+var locationMarker = L.marker([0, 0], {icon: customMarker}).addTo(map);
+L.tileLayer('https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=pa0TTxuqmZIvMvSESESA', {
+        attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
+    }).addTo(map);
+
 function setRegion(region) {
     if (region in states) {
         return states[region]
@@ -76,8 +91,18 @@ function setRegion(region) {
     return region
 }
 
-async function getIPInfo(ip) {
-    const response = await fetch(geo_url + ip);
+async function getGeoData(ipAddress=null, domain=null) {
+    let requestURL = new URL(ipifyURL);
+
+    requestURL.searchParams.append('apiKey', ipifyKey);
+    if (domain) {
+        requestURL.searchParams.append('domain', domain);
+    }
+    else if (ipAddress) {
+        requestURL.searchParams.append('ipAddress', ipAddress);
+    }
+    
+    const response = await fetch(requestURL);
     const geoData = await response.json();
 
     addressField.innerText = geoData.ip
@@ -85,21 +110,27 @@ async function getIPInfo(ip) {
     timezoneField.innerText = `UTC ${geoData.location.timezone}`
     ispField.innerText = geoData.isp
     
-    var map = L.map('map').setView(
+    map.setView(
         [geoData.location.lat, geoData.location.lng],
         15
     );
-    
-    L.tileLayer('https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=pa0TTxuqmZIvMvSESESA', {
-        attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
-    }).addTo(map);
+    locationMarker.setLatLng([geoData.location.lat, geoData.location.lng]);
 }
 
-async function initMap() {
+function searchIP() {
+    const addressRE = /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$|^(?:[a-fA-F0-9]{1,4}:){7}[a-fA-F0-9]{1,4}$/;
+   
+    if (addressRE.test(ipInput.value))
+        getGeoData(ipInput.value);
+    else
+        getGeoData(null, ipInput.value);
+}
+
+async function loadUserIP() {
     const response = await fetch(ipify);
-    return response.json();
+    const data = await response.json();
+
+    return data.ip;
 }
 
-initMap().then((data) => {
-    getIPInfo(data.ip);
-})
+getGeoData();
